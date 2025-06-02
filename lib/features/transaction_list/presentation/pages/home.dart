@@ -14,6 +14,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  Future<void> _pickDate(dynamic today) async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+     lastDate: DateTime(today.year, today.month, today.day),
+    );
+    if (picked != null) {
+      // Handle the picked date
+      print('Date selected: $picked');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,6 +76,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+
+
+
       body: SafeArea(
         child: Center(
           child: Column(
@@ -79,6 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
                       isExpanded: true,
+                      borderRadius: BorderRadius.circular(12),
                       icon: Row(
                         children: [
                           const Text(
@@ -97,13 +115,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.black87,
                       ),
                       items:
-                          <String>['Income', 'Expense'].map((String value) {
+                          <String>['Category', 'Date'].map((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
                               child: Text(value),
                             );
                           }).toList(),
-                      onChanged: (value) {},
+                      onChanged: (value) async {
+                        if (value == 'Category') {
+                          await _showCategoryDialog(context, income);
+
+                        } else {
+                          _pickDate(DateTime.now());
+                        }
+                      },
                     ),
                   ),
                 ),
@@ -159,7 +184,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               context: context,
                               builder: (context) => TransactionForm(
                                 onSubmit: (data) {
-                                  // Handle the submitted data
                                   print(data);
                                 },
                               ),
@@ -322,3 +346,62 @@ class ListCard extends StatelessWidget {
     },
     );
   }
+
+// Category selection dialog
+Future<void> _showCategoryDialog(BuildContext context, List<String> expense) async {
+  List<String> selectedCategories = [];
+
+  await showDialog(
+    context: context,
+    builder: (context) {
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return AlertDialog(
+            title: Text('Select Categories'),
+            content: SizedBox(
+              width: double.maxFinite,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: expense.length,
+                itemBuilder: (context, index) {
+                  final category = expense[index];
+                  final isSelected = selectedCategories.contains(category);
+                  return CheckboxListTile(
+                    title: Text(category),
+                    value: isSelected,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        if (value == true) {
+                          selectedCategories.add(category);
+                        } else {
+                          selectedCategories.remove(category);
+                        }
+                      });
+                    },
+                  );
+                },
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(), // Cancel
+                child: Text('Cancel'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop(selectedCategories);
+                },
+                child: Text('Select'),
+              ),
+            ],
+          );
+        },
+      );
+    },
+  ).then((selected) {
+    if (selected != null && selected is List<String>) {
+      // Handle the selected categories
+      print('Selected categories: $selected');
+    }
+  });
+}

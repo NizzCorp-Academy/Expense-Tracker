@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_trackerl_ite/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:expense_trackerl_ite/features/auth/presentation/bloc/auth_event.dart';
 import 'package:expense_trackerl_ite/features/auth/presentation/bloc/auth_state.dart';
 import 'package:expense_trackerl_ite/features/auth/presentation/pages/Signin.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
