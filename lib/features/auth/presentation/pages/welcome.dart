@@ -1,6 +1,6 @@
 import 'package:expense_trackerl_ite/features/auth/presentation/pages/Signin.dart';
 import 'package:expense_trackerl_ite/features/auth/presentation/pages/signup.dart';
-import 'package:expense_trackerl_ite/features/transaction_list/presentation/pages/home.dart';
+import 'package:expense_trackerl_ite/features/home_page/presentation/pages/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

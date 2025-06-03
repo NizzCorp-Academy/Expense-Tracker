@@ -1,0 +1,25 @@
+import 'package:expense_trackerl_ite/features/home_page/data/transactionmodel.dart';
+
+abstract class TransactionEvent {}
+
+class AddTransaction extends TransactionEvent {
+  final TransactionModel transaction;
+  AddTransaction(this.transaction);
+}
+
+class LoadTransactions extends TransactionEvent {
+  final String uid;
+  final List<String>? filterCategories; // ['Income', 'Expense'] or ['All']
+  final DateTime? selectedDate;
+
+  LoadTransactions({
+    required this.uid,
+    this.filterCategories,
+    this.selectedDate,
+  });
+}
+
+class TransactionsUpdated extends TransactionEvent {
+  final List<TransactionModel> transactions;
+  TransactionsUpdated(this.transactions);
+}

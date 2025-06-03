@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class TransactionForm extends StatefulWidget {
   final Function(Map<String, dynamic>) onSubmit;
-
   const TransactionForm({super.key, required this.onSubmit});
 
   @override
@@ -11,7 +11,6 @@ class TransactionForm extends StatefulWidget {
 
 class _TransactionFormState extends State<TransactionForm> {
   final _formKey = GlobalKey<FormState>();
-
   String _title = '';
   double _amount = 0.0;
   String _notes = '';
@@ -26,9 +25,7 @@ class _TransactionFormState extends State<TransactionForm> {
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
-    if (picked != null) {
-      setState(() => _selectedDate = picked);
-    }
+    if (picked != null) setState(() => _selectedDate = picked);
   }
 
   void _pickTime() async {
@@ -36,15 +33,20 @@ class _TransactionFormState extends State<TransactionForm> {
       context: context,
       initialTime: _selectedTime,
     );
-    if (picked != null) {
-      setState(() => _selectedTime = picked);
-    }
+    if (picked != null) setState(() => _selectedTime = picked);
   }
 
-  void _submit() {
+  void _submit() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('User not logged in')),
+        );
+        return;
+        
+      }
       final data = {
         'title': _title,
         'amount': _amount,
@@ -57,10 +59,9 @@ class _TransactionFormState extends State<TransactionForm> {
           _selectedTime.hour,
           _selectedTime.minute,
         ),
+        'uid': user.uid,
       };
-
       widget.onSubmit(data);
-      Navigator.of(context).pop(); // Close dialog
     }
   }
 
@@ -81,8 +82,7 @@ class _TransactionFormState extends State<TransactionForm> {
               TextFormField(
                 decoration: InputDecoration(labelText: 'Amount'),
                 keyboardType: TextInputType.number,
-                onSaved: (val) =>
-                    _amount = double.tryParse(val ?? '') ?? 0.0,
+                onSaved: (val) => _amount = double.tryParse(val ?? '') ?? 0.0,
                 validator: (val) => val!.isEmpty ? 'Enter amount' : null,
               ),
               TextFormField(
@@ -111,9 +111,7 @@ class _TransactionFormState extends State<TransactionForm> {
         ),
       ),
       actions: [
-        TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text('Cancel')),
+        TextButton(onPressed: () => Navigator.of(context).pop(), child: Text('Cancel')),
         ElevatedButton(onPressed: _submit, child: Text('Add')),
       ],
     );

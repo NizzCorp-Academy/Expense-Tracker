@@ -2,7 +2,7 @@ import 'package:expense_trackerl_ite/features/auth/presentation/bloc/auth_bloc.d
 import 'package:expense_trackerl_ite/features/auth/presentation/bloc/auth_event.dart';
 import 'package:expense_trackerl_ite/features/auth/presentation/bloc/auth_state.dart';
 import 'package:expense_trackerl_ite/features/auth/presentation/pages/signup.dart';
-import 'package:expense_trackerl_ite/features/transaction_list/presentation/pages/home.dart';
+import 'package:expense_trackerl_ite/features/home_page/presentation/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
