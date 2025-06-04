@@ -20,6 +20,9 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
       }
     });
 
+
+
+
     on<LoadTransactions>((event, emit) async {
       emit(TransactionLoading());
 

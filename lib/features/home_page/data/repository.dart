@@ -33,7 +33,6 @@ class TransactionRepository {
         .toList();
   }
 
-  // Stream real-time updates for the specific user's transactions
   Stream<List<TransactionModel>> watchTransactions(String uid) {
     return firestore
         .collection('transactions')
