@@ -6,6 +6,7 @@ import 'package:expense_trackerl_ite/features/home_page/presentation/bloc/transa
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class TransactionList extends StatefulWidget {
   const TransactionList({super.key});
@@ -64,7 +65,7 @@ class _TransactionListState extends State<TransactionList> {
           // Category FilterChips
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+            padding: const EdgeInsets.symmetric( vertical: 5),
             child: Row(
               children:
                   _allCategories.map((cat) {
@@ -76,7 +77,7 @@ class _TransactionListState extends State<TransactionList> {
                         selected: isSelected,
                         onSelected: (_) => _onChipTapped(cat),
                         selectedColor: Colors.blueAccent,
-                        checkmarkColor: Colors.white,
+                        showCheckmark: false,
                         labelStyle: TextStyle(
                           color: isSelected ? Colors.white : Colors.black,
                         ),
@@ -101,42 +102,67 @@ class _TransactionListState extends State<TransactionList> {
                         (context, index) => const SizedBox(height: 10),
                     itemBuilder: (context, index) {
                       final tx = state.transactions[index];
-                      return Container(
-                        decoration: BoxDecoration(
-                          color:
-                              tx.isIncome ? Colors.green : Colors.indigoAccent,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 5,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        margin: const EdgeInsets.only(left: 5, right: 5),
+                      return Slidable(
+                        endActionPane: ActionPane(
+                motion: const ScrollMotion(),
+                children: [
+                  SlidableAction(
+                    label: 'Edit',
+                    backgroundColor: Colors.blue,
+                    borderRadius: BorderRadius.circular(12),
+                    icon: Icons.edit,
+                    onPressed: (_) async {
+                      
+                    },
+                  ),
+
+                  SlidableAction(
+                    label: 'Delete',
+                    backgroundColor: Colors.red,
+                    borderRadius: BorderRadius.circular(12),
+                    icon: Icons.delete,
+                    onPressed: (_) {
+                    },
+                  ),
+                ],
+              ),
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color:
+                                tx.isIncome ? Colors.green : Colors.indigoAccent,
                             borderRadius: BorderRadius.circular(12),
-                          ),
-                          padding: const EdgeInsets.all(10),
-                          margin: const EdgeInsets.only(left: 10),
-                          child: ListTile(
-                            title: Text(
-                              tx.title,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                                color: Colors.black87,
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 5,
+                                offset: Offset(0, 3),
                               ),
+                            ],
+                          ),
+                          margin: const EdgeInsets.only(left: 5, right: 5),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
                             ),
-                            subtitle: Text(tx.notes),
-                            trailing: Text(
-                              "₹${tx.amount.toStringAsFixed(2)}",
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
+                            padding: const EdgeInsets.all(10),
+                            margin: const EdgeInsets.only(left: 10),
+                            child: ListTile(
+                              title: Text(
+                                tx.title,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                              subtitle: Text(tx.notes),
+                              trailing: Text(
+                                "₹${tx.amount.toStringAsFixed(2)}",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
                               ),
                             ),
                           ),

@@ -28,8 +28,6 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
 
       try {
         final initialData = await repository.getInitialTransactions(event.uid);
-
-        // Filter initial data based on categories and date
         final filteredInitial = _filterTransactions(
           initialData,
           event.filterCategories,
@@ -63,7 +61,6 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
     List<String>? filterCategories,
     DateTime? selectedDate,
   ) {
-    // If no filters, return all
     if ((filterCategories == null || filterCategories.isEmpty) && selectedDate == null) {
       return transactions;
     }
@@ -80,11 +77,5 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
 
       return matchesCategory && matchesDate;
     }).toList();
-  }
-
-  @override
-  Future<void> close() {
-    _subscription?.cancel();
-    return super.close();
   }
 }

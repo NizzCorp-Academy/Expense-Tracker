@@ -3,6 +3,7 @@ import 'package:expense_trackerl_ite/features/auth/data/firebase_message.dart';
 import 'package:expense_trackerl_ite/features/auth/data/firebase_options.dart';
 import 'package:expense_trackerl_ite/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:expense_trackerl_ite/features/auth/presentation/pages/welcome.dart';
+import 'package:expense_trackerl_ite/features/currency/presentation/bloc/currency_bloc.dart';
 import 'package:expense_trackerl_ite/features/home_page/data/repository.dart';
 import 'package:expense_trackerl_ite/features/home_page/presentation/bloc/transaction_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => TransactionBloc(transactionRepository),
         ),
+        BlocProvider(create: (context) => CurrencyBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

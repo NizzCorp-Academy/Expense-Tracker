@@ -9,7 +9,7 @@ class AddTransaction extends TransactionEvent {
 
 class LoadTransactions extends TransactionEvent {
   final String uid;
-  final List<String>? filterCategories; // ['Income', 'Expense'] or ['All']
+  final List<String>? filterCategories; 
   final DateTime? selectedDate;
 
   LoadTransactions({
@@ -22,4 +22,9 @@ class LoadTransactions extends TransactionEvent {
 class TransactionsUpdated extends TransactionEvent {
   final List<TransactionModel> transactions;
   TransactionsUpdated(this.transactions);
+}
+
+class DeleteTransaction extends TransactionEvent {
+  final String transactionId;
+  DeleteTransaction(this.transactionId);
 }
