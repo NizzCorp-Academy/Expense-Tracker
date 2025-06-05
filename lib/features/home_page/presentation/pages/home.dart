@@ -10,8 +10,10 @@ import 'package:expense_trackerl_ite/features/home_page/presentation/bloc/transa
 import 'package:expense_trackerl_ite/features/home_page/presentation/widgets/create_transactions.dart';
 import 'package:expense_trackerl_ite/features/home_page/presentation/widgets/total_card.dart';
 import 'package:expense_trackerl_ite/features/home_page/presentation/widgets/transactionwidget.dart';
+import 'package:expense_trackerl_ite/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -35,7 +37,12 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: () {
+            showNotification();
+          },
+          icon: Icon(Icons.notifications),
+        ),
         title: RichText(
           text: TextSpan(
             style: TextStyle(fontSize: 20, color: Colors.black),
@@ -43,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
               TextSpan(
                 text: 'Expense Tracker ',
                 style: GoogleFonts.poppins(
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: const Color.fromARGB(255, 0, 11, 17),
                 ),
@@ -51,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
               TextSpan(
                 text: 'Lite',
                 style: GoogleFonts.poppins(
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: const Color.fromARGB(255, 19, 125, 178),
                 ),
@@ -240,3 +247,24 @@ void logoutDialog(BuildContext context) {
   );
 }
 
+void showNotification() async {
+  const AndroidNotificationDetails androidPlatformChannelSpecifics =
+      AndroidNotificationDetails(
+    'your_channel_id',
+    'your_channel_name',
+    channelDescription: 'Your channel description',
+    importance: Importance.max,
+    priority: Priority.high,
+  );
+
+  const NotificationDetails platformChannelSpecifics = NotificationDetails(
+    android: androidPlatformChannelSpecifics,
+  );
+
+  await flutterLocalNotificationsPlugin.show(
+    0,
+    'Expense Reminder',
+    'Expense Limit Reached',
+    platformChannelSpecifics,
+  );
+}
