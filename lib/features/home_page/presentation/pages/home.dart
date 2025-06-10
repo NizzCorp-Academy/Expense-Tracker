@@ -1,6 +1,7 @@
 import 'package:expense_trackerl_ite/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:expense_trackerl_ite/features/auth/presentation/bloc/auth_event.dart';
 import 'package:expense_trackerl_ite/features/auth/presentation/pages/welcome.dart';
+import 'package:expense_trackerl_ite/features/chat_support/presentation/chat_widget.dart';
 import 'package:expense_trackerl_ite/features/currency/presentation/bloc/currency_bloc.dart';
 import 'package:expense_trackerl_ite/features/currency/presentation/bloc/currency_event.dart';
 import 'package:expense_trackerl_ite/features/currency/presentation/bloc/currency_state.dart';
@@ -26,7 +27,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+<<<<<<< HEAD
  @override
+=======
+  @override
+>>>>>>> feature/fcm
   void initState() {
     super.initState();
 
@@ -49,11 +54,15 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+<<<<<<< HEAD
         leading: IconButton(
           onPressed: () {
           },
           icon: Icon(Icons.notifications),
         ),
+=======
+        leading: IconButton(onPressed: () {}, icon: Icon(Icons.notifications)),
+>>>>>>> feature/fcm
         title: RichText(
           text: TextSpan(
             style: TextStyle(fontSize: 20, color: Colors.black),
@@ -124,7 +133,11 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             SizedBox(height: 630, child: TransactionList()),
+<<<<<<< HEAD
            
+=======
+
+>>>>>>> feature/fcm
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -221,6 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     child: BlocBuilder<TransactionBloc, TransactionState>(
+<<<<<<< HEAD
                        builder: (context, state) {
             if (state is IncomeAndExpenseCalculated) {
               return Totalcard(
@@ -229,6 +243,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 type: TotalType.expense,
               );
             }
+=======
+                      builder: (context, state) {
+                        if (state is IncomeAndExpenseCalculated) {
+                          return Totalcard(
+                            data: 'Total Expense',
+                            amount: state.totalExpense,
+                            type: TotalType.expense,
+                          );
+                        }
+>>>>>>> feature/fcm
                         return Totalcard(
                           data: 'Total Expense',
                           amount: 0,
@@ -240,9 +264,35 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
+<<<<<<< HEAD
             FloatingActionButton(onPressed: () {
               
             },child: Icon(Icons.chat),)
+=======
+            Center(
+              child: FloatingActionButton(
+                backgroundColor: Colors.grey,
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 400,
+                          child: const ExpenseWebSocketChatDialog(),
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: Icon(Icons.contact_support, color: Colors.white),
+              ),
+            ),
+>>>>>>> feature/fcm
           ],
         ),
         
@@ -303,3 +353,4 @@ void showNotification() async {
     platformChannelSpecifics,
   );
 }
+
