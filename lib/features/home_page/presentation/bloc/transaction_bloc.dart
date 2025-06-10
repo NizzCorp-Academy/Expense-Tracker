@@ -22,6 +22,28 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
 
 
 
+on<CalculateIncomeAndExpense>((event, emit) async {
+  try {
+    final allTransactions = await repository.getInitialTransactions(event.uid);
+
+    double income = 0;
+    double expense = 0;
+
+    for (var tx in allTransactions) {
+      if (tx.isIncome) {
+        income += tx.amount;
+      } else {
+        expense += tx.amount;
+      }
+    }
+
+    emit(IncomeAndExpenseCalculated(totalIncome: income, totalExpense: expense));
+  } catch (e) {
+    emit(TransactionError(e.toString()));
+  }
+});
+
+
 
     on<LoadTransactions>((event, emit) async {
       emit(TransactionLoading());
@@ -78,4 +100,6 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
       return matchesCategory && matchesDate;
     }).toList();
   }
+
+  
 }

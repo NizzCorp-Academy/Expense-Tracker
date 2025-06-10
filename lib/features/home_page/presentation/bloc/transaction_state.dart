@@ -24,3 +24,13 @@ class TransactionLoaded extends TransactionState {
     this.selectedDate,
   });
 }
+
+class IncomeAndExpenseCalculated extends TransactionState {
+  final double totalIncome;
+  final double totalExpense;
+
+  IncomeAndExpenseCalculated({
+    required this.totalIncome,
+    required this.totalExpense,
+  });
+}

@@ -1,7 +1,7 @@
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }
 
@@ -45,7 +45,8 @@ flutter {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.10.1")
-    implementation("com.google.android.material:material:1.9.0")
+    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("com.google.firebase:firebase-messaging")
+    implementation("com.google.firebase:firebase-analytics")
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
 }
