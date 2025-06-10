@@ -1,12 +1,41 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-class Firbase_Message {
- final _firebase_message = FirebaseMessaging.instance; 
+import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
- Future<void>initNotifications() async{
-await _firebase_message.requestPermission();
+class FirebaseMessage {
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
-final FCMToken = await _firebase_message.getToken();
+  Future<void> setupFCM() async {
+    // Get FCM token
+    final token = await _firebaseMessaging.getToken();
+    if (kDebugMode) {
+      print('✅ FCM Token: $token');
+    }
 
-print('Token: $FCMToken');
- }
+    // Save token to SharedPreferences
+    if (token != null) {
+      final preferences = await SharedPreferences.getInstance();
+      await preferences.setString('fcmToken', token);
+    }
+
+    // Handle foreground messages
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (kDebugMode) {
+        print('📥 [Foreground] ${message.notification?.title}: ${message.notification?.body}');
+      }
+    });
+
+    // Handle notification when app is opened from background
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      if (kDebugMode) {
+        print('📲 [OpenedApp] ${message.notification?.title}');
+      }
+    });
+
+    // Handle when app is launched from terminated state via notification
+    final initialMessage = await _firebaseMessaging.getInitialMessage();
+    if (initialMessage != null && kDebugMode) {
+      print('🔄 [TerminatedOpen] ${initialMessage.notification?.title}');
+    }
+  }
 }

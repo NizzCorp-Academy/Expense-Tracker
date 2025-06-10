@@ -20,42 +20,6 @@ class _Sign_InState extends State<Sign_In> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  // Future<bool> signInWithGoogle(BuildContext context) async {
-  //   try {
-  //     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-  //     if (googleUser == null) {
-  //       // User cancelled the sign-in
-  //       return false;
-  //     }
-
-  //     final GoogleSignInAuthentication googleAuth =
-  //         await googleUser.authentication;
-
-  //     final credential = GoogleAuthProvider.credential(
-  //       accessToken: googleAuth.accessToken,
-  //       idToken: googleAuth.idToken,
-  //     );
-
-  //     final UserCredential userCredential = await FirebaseAuth.instance
-  //         .signInWithCredential(credential);
-
-  //     if (userCredential.user != null) {
-  //       ScaffoldMessenger.of(
-  //         context,
-  //       ).showSnackBar(SnackBar(content: Text("Signed in with Google")));
-  //       return true;
-  //     }
-
-  //     return false;
-  //   } catch (e) {
-  //     print('Google Sign-In Error: $e');
-  //     ScaffoldMessenger.of(
-  //       context,
-  //     ).showSnackBar(SnackBar(content: Text("Google Sign-In failed")));
-  //     return false;
-  //   }
-  // }
 bool isLoading = false;
   @override
   Widget build(BuildContext context) {

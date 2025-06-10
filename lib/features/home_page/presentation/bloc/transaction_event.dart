@@ -28,3 +28,10 @@ class DeleteTransaction extends TransactionEvent {
   final String transactionId;
   DeleteTransaction(this.transactionId);
 }
+
+class CalculateIncomeAndExpense extends TransactionEvent {
+  final String uid;
+  final DateTime date;
+
+  CalculateIncomeAndExpense({required this.uid, required this.date});
+}
