@@ -5,6 +5,10 @@ A Flutter-based expense tracking app integrated with Firebase (Firestore + Authe
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Platform](https://img.shields.io/badge/platform-multi--platform-lightgrey)
 
+📎 Website: https://nizzcorp-academy.github.io/Expense-Tracker/
+
+🌐 GitHub Repo: https://github.com/NizzCorp-Academy/Expense-Tracker
+
 ---
 
 ## 🚀 Features
